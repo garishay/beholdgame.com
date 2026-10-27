@@ -1,0 +1,300 @@
+/* beholdgame.com's one stylesheet (#70, Gate 45 A3): the design's "Linen and ink", phone first,
+   with a computer's layout from 900 px wide. Each color the game has is the game's own token by
+   value, named beside it. The fonts are the game's two stacks; there are no web fonts and no gold.
+   Night is the game's, inside its pictures, and no rule here paints with it. */
+
+:root {
+  --linen: #f4eee2; /* the game's --papyrus, lightened: the page */
+  --edge: #cdbb93; /* --papyrus-edge: hairlines */
+  --ink: #2b2418; /* --papyrus-ink: text, and the foot's ground */
+  --ink-dim: #6e5a3c; /* --papyrus-ink-dim: secondary text */
+  --wine: #7a2e3b; /* --wine: the one accent */
+  --foot-text: #cfc6b5;
+  --foot-fine: #a9a69c;
+  --serif: 'Iowan Old Style', 'Palatino Linotype', Palatino, 'Book Antiqua', Georgia, serif;
+  --sans: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --gutter: clamp(20px, 4vw, 48px);
+}
+
+body {
+  margin: 0;
+  background: var(--linen);
+  color: var(--ink);
+  font-family: var(--sans);
+}
+
+a {
+  color: var(--wine);
+}
+
+:focus-visible {
+  outline: 2px solid var(--wine);
+  outline-offset: 2px;
+}
+
+h1,
+h2 {
+  font-family: var(--serif);
+  font-weight: 400;
+}
+
+/* Below a computer's width, the page is the phone's, in a column no wider than 600 px. */
+.top,
+main,
+.foot > div {
+  max-width: 600px;
+  margin-inline: auto;
+}
+
+/* The inner pages' header: on a phone, the name alone (A5 as ruled). */
+.top nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 56px;
+  border-bottom: 1px solid var(--edge);
+}
+
+.top .name {
+  font-family: var(--serif);
+  font-size: 24px;
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.top .play {
+  display: none;
+}
+
+.kicker {
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.25;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--wine);
+}
+
+.about {
+  padding: 40px 20px 48px;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.about .icon {
+  display: block;
+  width: 72px;
+  height: 72px;
+  border-radius: 16px;
+  box-shadow: 0 8px 18px rgb(43 36 24 / 0.22);
+}
+
+.about p {
+  margin: 14px 0 0;
+}
+
+.about .kicker {
+  margin-top: 24px;
+}
+
+.about h1 {
+  margin: 12px 0 0;
+  font-size: 36px;
+  line-height: 1.12;
+}
+
+.about .lead {
+  margin-top: 16px;
+  font-family: var(--serif);
+  font-size: 20px;
+  line-height: 1.45;
+}
+
+.about h2 {
+  margin: 40px 0 0;
+  font-size: 24px;
+  line-height: 1.2;
+}
+
+.about h2 + p {
+  margin-top: 10px;
+}
+
+.about .dim {
+  margin-top: 12px;
+  font-size: 15px;
+  color: var(--ink-dim);
+}
+
+/* The foot of every page, on the ink. */
+.foot {
+  background: var(--ink);
+  color: var(--foot-text);
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.foot > div {
+  padding: 28px 20px 44px;
+}
+
+.foot p {
+  margin: 8px 0 0;
+}
+
+.foot .name {
+  margin: 0;
+  font-family: var(--serif);
+  font-size: 22px;
+  color: var(--linen);
+}
+
+.foot .links {
+  margin-top: 6px;
+  line-height: 2;
+}
+
+.foot ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.foot li {
+  display: inline;
+}
+
+/* The dots between the links are the stylesheet's, and a screen reader passes over them. */
+.foot li + li::before {
+  content: '·' / '';
+  margin: 0 0.3em;
+}
+
+.foot a {
+  color: var(--linen);
+}
+
+.foot .fine {
+  margin-top: 14px;
+  font-size: 11px;
+  color: var(--foot-fine);
+}
+
+@media (min-width: 900px) {
+  .top {
+    max-width: 1120px;
+    padding: 0 var(--gutter);
+  }
+
+  .top nav {
+    justify-content: space-between;
+    height: auto;
+    padding: 22px 0;
+  }
+
+  .top .name {
+    font-size: 28px;
+  }
+
+  .top .play {
+    display: inline-flex;
+    align-items: center;
+    min-height: 42px;
+    padding: 0 20px;
+    border-radius: 9px;
+    background: var(--wine);
+    color: var(--linen);
+    font-size: 15px;
+    text-decoration: none;
+  }
+
+  .about {
+    max-width: 680px;
+    padding: 80px var(--gutter) 104px;
+    font-size: 18px;
+    line-height: 1.65;
+  }
+
+  .about .icon {
+    width: 88px;
+    height: 88px;
+    border-radius: 20px;
+    box-shadow: 0 10px 22px rgb(43 36 24 / 0.22);
+  }
+
+  .about p {
+    margin-top: 16px;
+  }
+
+  .about .kicker {
+    margin-top: 28px;
+    font-size: 13px;
+  }
+
+  .about h1 {
+    font-size: 56px;
+    line-height: 1.08;
+  }
+
+  .about .lead {
+    margin-top: 22px;
+    font-size: 24px;
+  }
+
+  .about h2 {
+    margin-top: 56px;
+    font-size: 30px;
+  }
+
+  .about h2 + p {
+    margin-top: 12px;
+  }
+
+  .about .dim {
+    margin-top: 14px;
+    font-size: 17px;
+  }
+
+  /* One line of links beside the name, and Google's line under both. */
+  .foot {
+    font-size: 14px;
+  }
+
+  .foot > div {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 16px 32px;
+    max-width: 1120px;
+    padding: 40px var(--gutter) 52px;
+  }
+
+  .foot .name {
+    font-size: 28px;
+  }
+
+  .foot .name + p {
+    margin-top: 6px;
+  }
+
+  .foot .links {
+    margin: 0;
+    line-height: 1.6;
+  }
+
+  .foot ul {
+    display: inline;
+  }
+
+  .foot ul + ul::before {
+    content: '·' / '';
+    margin: 0 0.3em;
+  }
+
+  .foot .fine {
+    flex-basis: 100%;
+    margin: 0;
+    font-size: 12px;
+  }
+}
