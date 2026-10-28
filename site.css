@@ -837,16 +837,21 @@ main,
   margin: 26px 0 0;
 }
 
+/* The six and the room keep one row at any phone's width: each takes a seventh of the row less its
+   six gaps, up to 44 × 55, its size from 384 px wide. */
+.six img,
+.six span {
+  width: min(44px, calc((100% - 36px) / 7));
+  height: auto;
+  aspect-ratio: 4 / 5;
+}
+
 .six img {
-  width: 44px;
-  height: 55px;
   border-radius: 6px;
   box-shadow: 0 4px 10px rgb(58 43 37 / 0.18);
 }
 
 .six span {
-  width: 44px;
-  height: 55px;
   box-sizing: border-box;
   border: 1.5px dashed var(--wine);
   border-radius: 6px;
