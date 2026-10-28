@@ -5,10 +5,13 @@
 
 :root {
   --linen: #f4eee2; /* the game's --papyrus, lightened: the page */
+  --papyrus: #e8dcc2; /* --papyrus: the season's band */
+  --vellum: #fbf7ef; /* cards and boxes, a step lighter than the page */
   --edge: #cdbb93; /* --papyrus-edge: hairlines */
   --ink: #2b2418; /* --papyrus-ink: text, and the foot's ground */
   --ink-dim: #6e5a3c; /* --papyrus-ink-dim: secondary text */
   --wine: #7a2e3b; /* --wine: the one accent */
+  --ring: 0 0 0 1px rgb(43 36 24 / 0.12); /* a card's edge, ink at 12% */
   --foot-text: #cfc6b5;
   --foot-fine: #a9a69c;
   --serif: 'Iowan Old Style', 'Palatino Linotype', Palatino, 'Book Antiqua', Georgia, serif;
@@ -33,13 +36,19 @@ a {
 }
 
 h1,
-h2 {
+h2,
+h3 {
   font-family: var(--serif);
   font-weight: 400;
 }
 
+.dim {
+  color: var(--ink-dim);
+}
+
 /* Below a computer's width, the page is the phone's, in a column no wider than 600 px. */
 .top,
+.hero,
 main,
 .foot > div {
   max-width: 600px;
@@ -62,7 +71,8 @@ main,
   text-decoration: none;
 }
 
-.top .play {
+.top .browser,
+.beside {
   display: none;
 }
 
@@ -73,6 +83,530 @@ main,
   letter-spacing: 0.2em;
   text-transform: uppercase;
   color: var(--wine);
+}
+
+/* The play buttons (A5, A6): a group for each device, the computer's until a script names the
+   device (70d). On a phone the first button fills the column, and the rest sit under it. */
+.play {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.play.android,
+.play.iphone {
+  display: none;
+}
+
+.button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  align-self: stretch;
+  min-height: 52px;
+  border-radius: 10px;
+  background: var(--wine);
+  color: var(--linen);
+  font-size: 17px;
+  text-decoration: none;
+}
+
+.coming {
+  display: flex;
+  align-items: center;
+  height: 52px;
+  margin: 14px 0 0;
+  padding: 0 20px;
+  box-sizing: border-box;
+  border: 1px solid var(--edge);
+  border-radius: 9px;
+  font-size: 15px;
+  color: var(--ink-dim);
+}
+
+.badge img {
+  display: block;
+  height: 60px;
+}
+
+.play .or {
+  margin: 16px 0 0;
+  font-size: 15px;
+}
+
+.play .note {
+  margin: 14px 0 0;
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+/* The home page's top: the picture over the name on a phone, beside it on a computer. */
+.hero {
+  display: flex;
+  flex-direction: column-reverse;
+  padding-bottom: 40px;
+  text-align: center;
+}
+
+.art {
+  position: relative;
+  aspect-ratio: 390 / 540;
+  overflow: hidden;
+}
+
+.art img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* The picture fades into the page under its last third. */
+.art::after {
+  content: '';
+  position: absolute;
+  inset: 61.11% 0 0;
+  background: linear-gradient(
+    180deg,
+    rgb(244 238 226 / 0) 0%,
+    rgb(244 238 226 / 0.86) 52%,
+    var(--linen) 92%
+  );
+}
+
+.hero .words {
+  padding: 26px 20px 0;
+}
+
+.hero h1 {
+  margin: 0;
+  font-size: 58px;
+  line-height: 1.05;
+}
+
+.hero .kicker {
+  margin-top: 8px;
+  font-size: 13px;
+}
+
+.hero .line {
+  margin: 16px 0 26px;
+  font-family: var(--serif);
+  font-size: 20px;
+  line-height: 1.45;
+}
+
+/* A sentence to a line: the title's line, as the game sets it, and the close's on a phone. */
+.line span,
+.call > p span {
+  display: block;
+}
+
+.price {
+  margin: 18px 0 0;
+  font-size: 14px;
+  color: var(--ink-dim);
+}
+
+.what {
+  margin: 0 20px;
+  padding: 34px 0 44px;
+  border-top: 1px solid var(--edge);
+}
+
+.what h2 {
+  margin: 0;
+  font-size: 23px;
+  line-height: 1.4;
+}
+
+.what p {
+  margin: 14px 0 0;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.more {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  column-gap: 16px;
+  margin-top: 24px;
+  padding: 16px 20px;
+  border-radius: 12px;
+  background: var(--vellum);
+  box-shadow: var(--ring);
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.more .title {
+  font-family: var(--serif);
+  font-size: 19px;
+  line-height: 1.35;
+}
+
+.more .sub {
+  margin-top: 3px;
+  font-size: 14px;
+  color: var(--wine);
+}
+
+/* The arrow is the stylesheet's, as the foot's dots are, with the plain one before it. */
+.more::after {
+  content: '→';
+  content: '→' / '';
+  grid-area: 1 / 2 / 3;
+  font-size: 22px;
+  color: var(--wine);
+}
+
+.season {
+  padding: 48px 20px 40px;
+  background: var(--papyrus);
+  text-align: center;
+}
+
+.season h2 {
+  margin: 6px 0 0;
+  font-size: 30px;
+  line-height: 1.15;
+}
+
+.season .intro {
+  margin: 10px 0 0;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+/* The open Bible over the timeline, drawn: the cover, the pages' edges, two pages with their books
+   and their lines of text, and the ribbon. Its sizes are variables, so a computer's is one rule. */
+.bible {
+  --wide: 300px;
+  --tall: 178px;
+  --gap-above: 34px;
+  --cover: 6px -8px -4px;
+  --cover-round: 14px;
+  --cover-shadow: 0 16px 30px rgb(58 43 37 / 0.3);
+  --edges: 4px -3px 3px;
+  --edges-round: 11px;
+  --page: 150px;
+  --page-tall: 171px;
+  --page-round: 8px;
+  --spine-round: 11px;
+  --label-top: 11px;
+  --label-size: 9px;
+  --label-space: 0.22em;
+  --line: 1.5px;
+  --line-gap: 7px;
+  --column: 53.5px 126px;
+  --columns-top: 30px;
+  --left-a: 16px;
+  --left-b: 78.5px;
+  --right-a: 18px;
+  --right-b: 80.5px;
+  --ribbon: 14px auto auto -4px;
+  --ribbon-size: 8px;
+  --ribbon-long: 214px;
+  --ribbon-tip: 94%;
+  --lines: repeating-linear-gradient(
+    180deg,
+    rgb(43 36 24 / 0.22) 0 var(--line),
+    transparent var(--line) var(--line-gap)
+  );
+  position: relative;
+  z-index: 0;
+  width: var(--wide);
+  height: var(--tall);
+  margin: var(--gap-above) auto 0;
+}
+
+.bible::before,
+.bible::after {
+  content: '';
+  position: absolute;
+  z-index: -1;
+}
+
+.bible::before {
+  z-index: -2;
+  inset: var(--cover);
+  border-radius: var(--cover-round);
+  background: #3a2b25;
+  box-shadow: var(--cover-shadow);
+}
+
+.bible::after {
+  inset: var(--edges);
+  border-radius: var(--edges-round);
+  background: repeating-linear-gradient(180deg, #d9cbab 0 1px, #f6efdd 1px 3px);
+}
+
+.bible p {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: var(--page);
+  height: var(--page-tall);
+  margin: 0;
+  padding-top: var(--label-top);
+  box-sizing: border-box;
+  border-radius: var(--page-round) 2px 2px var(--spine-round);
+  background:
+    var(--lines) var(--left-a) var(--columns-top) / var(--column) no-repeat,
+    var(--lines) var(--left-b) var(--columns-top) / var(--column) no-repeat,
+    linear-gradient(90deg, #fdfaf2 0%, #f6efdf 70%, #d6c7a6 100%);
+  font-size: var(--label-size);
+  letter-spacing: var(--label-space);
+  text-transform: uppercase;
+  color: var(--wine);
+}
+
+.bible p + p {
+  left: auto;
+  right: 0;
+  border-radius: 2px var(--page-round) var(--spine-round) 2px;
+  background:
+    var(--lines) var(--right-a) var(--columns-top) / var(--column) no-repeat,
+    var(--lines) var(--right-b) var(--columns-top) / var(--column) no-repeat,
+    linear-gradient(270deg, #fdfaf2 0%, #f6efdf 70%, #d6c7a6 100%);
+}
+
+.bible p + p::before {
+  content: '';
+  position: absolute;
+  inset: var(--ribbon);
+  width: var(--ribbon-size);
+  height: var(--ribbon-long);
+  background: linear-gradient(90deg, #5e2430 0%, #9a4252 50%, #5e2430 100%);
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 50% var(--ribbon-tip), 0 100%);
+}
+
+/* The timeline: a wine thread through the season, a pill for each book, the cases on it, and
+   season two at its end. */
+.timeline {
+  position: relative;
+  margin: 26px 0 0;
+  padding: 0 0 8px;
+  list-style: none;
+}
+
+.timeline::before {
+  content: '';
+  position: absolute;
+  top: 24px;
+  bottom: 50px;
+  left: 50%;
+  width: 2px;
+  margin-left: -1px;
+  background: linear-gradient(180deg, var(--wine) 0%, var(--wine) 92%, rgb(122 46 59 / 0) 100%);
+}
+
+.book {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  margin-top: 26px;
+}
+
+.book:first-child {
+  margin-top: 44px;
+}
+
+.book span {
+  padding: 5px 14px;
+  border: 1px solid var(--wine);
+  border-radius: 999px;
+  background: var(--papyrus);
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--wine);
+}
+
+/* A book the story passes through with no case of its own. */
+.book.passed span {
+  padding: 4px 12px;
+  border-color: rgb(110 90 60 / 0.4);
+  font-size: 10px;
+  color: var(--ink-dim);
+}
+
+.case {
+  position: relative;
+  display: grid;
+  grid-template:
+    'picture title' auto
+    'picture sub' auto
+    'picture .' 1fr
+    'brief brief' auto / 84px 1fr;
+  column-gap: 12px;
+  margin-top: 22px;
+  padding: 14px;
+  border-radius: 14px;
+  background: var(--vellum);
+  box-shadow:
+    0 0 0 1px rgb(43 36 24 / 0.1),
+    0 8px 20px rgb(58 43 37 / 0.08);
+  text-align: left;
+}
+
+.book + .case {
+  margin-top: 18px;
+}
+
+.case img {
+  grid-area: picture;
+  width: 84px;
+  height: 105px;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+.case h3 {
+  grid-area: title;
+  margin: 2px 0 0;
+  font-size: 19px;
+  line-height: 1.25;
+}
+
+.case .sub {
+  grid-area: sub;
+  margin: 2px 0 0;
+  font-size: 13px;
+  color: var(--wine);
+}
+
+.case .brief {
+  grid-area: brief;
+  margin: 10px 0 0;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--ink-dim);
+}
+
+.next {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 34px;
+}
+
+.next span {
+  width: 14px;
+  height: 14px;
+  box-sizing: border-box;
+  border: 2px dashed var(--wine);
+  border-radius: 50%;
+  background: var(--papyrus);
+}
+
+.next p {
+  margin: 10px 0 0;
+  font-family: var(--serif);
+  font-size: 19px;
+  color: var(--wine);
+}
+
+.help {
+  margin: 2px 0 0;
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.home-screen {
+  margin: 44px 20px 0;
+  padding: 24px 20px;
+  border-radius: 14px;
+  background: var(--vellum);
+  box-shadow: var(--ring);
+  font-size: 15px;
+  line-height: 1.55;
+}
+
+.home-screen h2,
+.free h2 {
+  margin: 0;
+  font-size: 24px;
+  line-height: 1.2;
+}
+
+.home-screen p {
+  margin: 10px 0 0;
+}
+
+.home-screen ol {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 14px 0 0;
+  padding-left: 22px;
+}
+
+.home-screen strong {
+  font-weight: 600;
+}
+
+.home-screen .note {
+  margin-top: 14px;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--ink-dim);
+}
+
+.free {
+  padding: 40px 20px 0;
+}
+
+.free p {
+  margin: 10px 0 0;
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--ink-dim);
+}
+
+.epigraph {
+  margin: 0;
+  padding: 52px 28px 0;
+  text-align: center;
+}
+
+/* A short wine rule over the verse. */
+.epigraph::before {
+  content: '';
+  display: block;
+  width: 40px;
+  height: 2px;
+  margin: 0 auto 22px;
+  background: var(--wine);
+}
+
+.epigraph blockquote {
+  margin: 0;
+  font-family: var(--serif);
+  font-size: 22px;
+  font-style: italic;
+  line-height: 1.5;
+}
+
+.epigraph figcaption {
+  margin-top: 14px;
+  font-size: 12px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--wine);
+}
+
+.call {
+  padding: 52px 20px 44px;
+  text-align: center;
+}
+
+.call > p {
+  margin: 0 0 20px;
+  font-family: var(--serif);
+  font-size: 21px;
+  line-height: 1.45;
 }
 
 .about {
@@ -123,7 +657,6 @@ main,
 .about .dim {
   margin-top: 12px;
   font-size: 15px;
-  color: var(--ink-dim);
 }
 
 /* The foot of every page, on the ink. */
@@ -164,8 +697,10 @@ main,
   display: inline;
 }
 
-/* The dots between the links are the stylesheet's, and a screen reader passes over them. */
+/* The dots between the links are the stylesheet's, and a screen reader passes over them. A
+   browser without alternative text for generated content keeps the plain dot before it. */
 .foot li + li::before {
+  content: '·';
   content: '·' / '';
   margin: 0 0.3em;
 }
@@ -181,7 +716,8 @@ main,
 }
 
 @media (min-width: 900px) {
-  .top {
+  .top,
+  .beside {
     max-width: 1120px;
     padding: 0 var(--gutter);
   }
@@ -196,7 +732,7 @@ main,
     font-size: 28px;
   }
 
-  .top .play {
+  .top .browser {
     display: inline-flex;
     align-items: center;
     min-height: 42px;
@@ -206,6 +742,401 @@ main,
     color: var(--linen);
     font-size: 15px;
     text-decoration: none;
+  }
+
+  /* The home page's nav: How it plays, at the top's right. */
+  .beside {
+    display: flex;
+    justify-content: flex-end;
+    margin: 0 auto;
+    padding-top: 26px;
+    font-size: 15px;
+  }
+
+  .beside a {
+    padding-bottom: 3px;
+    border-bottom: 1px solid var(--edge);
+    color: var(--ink);
+    text-decoration: none;
+  }
+
+  .play {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .button {
+    align-self: auto;
+    padding: 0 32px;
+  }
+
+  .coming {
+    margin: 0;
+  }
+
+  .badge img {
+    height: 52px;
+  }
+
+  .hero {
+    flex-flow: row wrap-reverse;
+    align-items: center;
+    gap: 64px;
+    max-width: 1120px;
+    padding: 36px var(--gutter) 80px;
+    text-align: left;
+  }
+
+  .hero .words {
+    flex: 1 1 440px;
+    min-width: 0;
+    padding: 0;
+  }
+
+  .art {
+    flex: 0 1 440px;
+    width: 100%;
+    max-width: 440px;
+    height: 640px;
+    aspect-ratio: auto;
+    border-radius: 18px 18px 0 0;
+  }
+
+  .art::after {
+    inset: auto 0 0;
+    height: 230px;
+    background: linear-gradient(
+      180deg,
+      rgb(244 238 226 / 0) 0%,
+      rgb(244 238 226 / 0.86) 55%,
+      var(--linen) 100%
+    );
+  }
+
+  .hero h1 {
+    font-size: 96px;
+    line-height: 1;
+  }
+
+  .hero .kicker {
+    margin-top: 14px;
+    font-size: 14px;
+  }
+
+  .hero .line {
+    margin: 28px 0 36px;
+    font-size: 28px;
+    line-height: 1.4;
+  }
+
+  .price {
+    margin-top: 20px;
+  }
+
+  .home {
+    max-width: none;
+  }
+
+  .what {
+    display: grid;
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    gap: 64px;
+    width: min(1120px, 100% - 2 * var(--gutter));
+    margin: 0 auto;
+    padding: 64px 0 96px;
+  }
+
+  .what h2 {
+    font-size: 38px;
+    line-height: 1.25;
+  }
+
+  .what p {
+    font-size: 18px;
+    line-height: 1.65;
+  }
+
+  .what div > p:first-child {
+    margin-top: 0;
+  }
+
+  .more {
+    column-gap: 24px;
+    max-width: 480px;
+    margin-top: 28px;
+    padding: 18px 24px;
+  }
+
+  .more .title {
+    font-size: 22px;
+  }
+
+  .more .sub {
+    margin-top: 4px;
+    font-size: 15px;
+  }
+
+  .more::after {
+    font-size: 26px;
+  }
+
+  .season {
+    padding: 80px var(--gutter) 72px;
+  }
+
+  .season .kicker {
+    font-size: 13px;
+  }
+
+  .season h2 {
+    margin-top: 8px;
+    font-size: 46px;
+    line-height: 1.1;
+  }
+
+  .season .intro {
+    max-width: 620px;
+    margin: 14px auto 0;
+    font-size: 18px;
+  }
+
+  .bible {
+    --wide: 560px;
+    --tall: 330px;
+    --gap-above: 56px;
+    --cover: 10px -14px -6px;
+    --cover-round: 20px;
+    --cover-shadow: 0 26px 50px rgb(58 43 37 / 0.32);
+    --edges: 6px -5px 4px;
+    --edges-round: 16px;
+    --page: 280px;
+    --page-tall: 318px;
+    --page-round: 12px;
+    --spine-round: 16px;
+    --label-top: 20px;
+    --label-size: 11px;
+    --label-space: 0.24em;
+    --line: 2px;
+    --line-gap: 10px;
+    --column: 101px 238px;
+    --columns-top: 47px;
+    --left-a: 30px;
+    --left-b: 147px;
+    --right-a: 32px;
+    --right-b: 149px;
+    --ribbon: 26px auto auto -6px;
+    --ribbon-size: 12px;
+    --ribbon-long: 372px;
+    --ribbon-tip: 95%;
+  }
+
+  .timeline {
+    max-width: 1120px;
+    margin: 40px auto 0;
+  }
+
+  .timeline::before {
+    top: 26px;
+    bottom: 60px;
+    background: linear-gradient(180deg, var(--wine) 0%, var(--wine) 90%, rgb(122 46 59 / 0) 100%);
+  }
+
+  .timeline .book {
+    margin-top: 48px;
+  }
+
+  .book span {
+    padding: 6px 16px;
+    font-size: 12px;
+  }
+
+  .book.passed span {
+    padding: 5px 14px;
+    font-size: 11px;
+  }
+
+  /* The cases alternate on either side of the thread, each picture toward it, with a dot. */
+  .case {
+    grid-template:
+      'picture title' auto
+      'picture sub' auto
+      'picture brief' 1fr / 140px 1fr;
+    column-gap: 22px;
+    width: calc(50% - 48px);
+    margin: 36px 0 0 auto;
+    padding: 0;
+    background: none;
+    box-shadow: none;
+  }
+
+  .case:nth-child(odd of .case) {
+    grid-template:
+      'title picture' auto
+      'sub picture' auto
+      'brief picture' 1fr / 1fr 140px;
+    margin-left: 0;
+    text-align: right;
+  }
+
+  .book + .case {
+    margin-top: 30px;
+  }
+
+  .case img {
+    width: 140px;
+    height: 175px;
+    border-radius: 10px;
+    box-shadow: 0 10px 24px rgb(58 43 37 / 0.2);
+  }
+
+  .case h3 {
+    margin-top: 4px;
+    font-size: 24px;
+  }
+
+  .case .sub {
+    margin-top: 4px;
+    font-size: 14px;
+  }
+
+  .case .brief {
+    font-size: 15px;
+    line-height: 1.6;
+  }
+
+  .case::after {
+    content: '';
+    position: absolute;
+    top: 80px;
+    left: -55px;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--wine);
+    box-shadow: 0 0 0 5px var(--papyrus);
+  }
+
+  .case:nth-child(odd of .case)::after {
+    left: auto;
+    right: -55px;
+  }
+
+  .next {
+    margin-top: 56px;
+  }
+
+  .next span {
+    width: 16px;
+    height: 16px;
+  }
+
+  .next p {
+    margin-top: 14px;
+    font-size: 24px;
+  }
+
+  .help {
+    margin-top: 4px;
+    font-size: 16px;
+  }
+
+  /* The iPhone box beside the free paragraph and the verse. */
+  .pair {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: 48px;
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 80px var(--gutter) 0;
+  }
+
+  /* The design's box is border-box, so its 440 px basis holds its padding. */
+  .home-screen {
+    flex: 1 1 440px;
+    min-width: 0;
+    margin: 0;
+    padding: 32px;
+    box-sizing: border-box;
+    font-size: 16px;
+    line-height: 1.6;
+  }
+
+  .home-screen h2,
+  .free h2 {
+    font-size: 28px;
+  }
+
+  .home-screen p {
+    margin-top: 12px;
+  }
+
+  .home-screen ol {
+    margin-top: 16px;
+  }
+
+  .home-screen .note {
+    margin-top: 16px;
+    font-size: 14px;
+    line-height: 1.55;
+  }
+
+  .pair > div {
+    display: flex;
+    flex: 1 1 380px;
+    flex-direction: column;
+    gap: 44px;
+    min-width: 0;
+    padding-top: 8px;
+  }
+
+  .free {
+    padding: 0;
+  }
+
+  .free p {
+    margin-top: 12px;
+    font-size: 16px;
+    line-height: 1.65;
+  }
+
+  .epigraph {
+    padding: 0;
+    text-align: left;
+  }
+
+  .epigraph::before {
+    margin: 0 0 20px;
+  }
+
+  .epigraph blockquote {
+    font-size: 24px;
+  }
+
+  .epigraph figcaption {
+    margin-top: 12px;
+  }
+
+  .call {
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 104px var(--gutter) 96px;
+  }
+
+  .call > p {
+    margin: 0;
+    font-size: 32px;
+    line-height: 1.4;
+  }
+
+  .call > p span {
+    display: inline;
+  }
+
+  .call .play {
+    justify-content: center;
+    margin-top: 28px;
   }
 
   .about {
@@ -288,6 +1219,7 @@ main,
   }
 
   .foot ul + ul::before {
+    content: '·';
     content: '·' / '';
     margin: 0 0.3em;
   }
