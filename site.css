@@ -609,8 +609,205 @@ main,
   line-height: 1.45;
 }
 
-.about {
+/* How it plays: the steps, each under a screen of the game, the hint, and the close. */
+.plays {
+  padding: 44px 20px 0;
+  text-align: center;
+}
+
+.plays h1 {
+  margin: 12px 0 0;
+  font-size: 40px;
+  line-height: 1.1;
+  text-wrap: balance;
+}
+
+.plays .lead {
+  margin: 18px 0 0;
+  font-family: var(--serif);
+  font-size: 20px;
+  line-height: 1.45;
+}
+
+.plays .intro .dim {
+  max-width: 330px;
+  margin: 10px auto 0;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.steps {
+  display: flex;
+  flex-direction: column;
+  gap: 56px;
+  margin: 0;
+  padding: 52px 0 0;
+  list-style: none;
+}
+
+/* A screen of the game in a phone's dark frame, its corners inside the frame's. */
+.screen {
+  --round: 36px;
+  width: 252px;
+  margin: 0 auto;
+  padding: 8px;
+  box-sizing: border-box;
+  border-radius: var(--round);
+  background: var(--ink);
+  box-shadow:
+    0 30px 50px -18px rgb(43 36 24 / 0.45),
+    0 2px 6px rgb(43 36 24 / 0.18);
+}
+
+.screen img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: calc(var(--round) - 8px);
+}
+
+.steps .kicker {
+  margin-top: 30px;
+}
+
+.steps h2 {
+  margin: 8px 0 0;
+  font-size: 28px;
+  line-height: 1.2;
+}
+
+.steps .dim {
+  max-width: 320px;
+  margin: 10px auto 0;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.hint {
+  margin-top: 56px;
+  padding: 22px;
+  border-radius: 14px;
+  background: var(--vellum);
+  box-shadow: var(--ring);
+}
+
+.hint .ask {
+  margin: 0;
+  font-family: var(--serif);
+  font-size: 21px;
+  line-height: 1.4;
+}
+
+.hint .dim {
+  margin: 6px 0 0;
+  font-size: 15px;
+  line-height: 1.55;
+}
+
+.plays .call {
+  padding: 52px 0 48px;
+}
+
+/* Support, built only while giving is set (A6), its button the Payment Link's. */
+.support {
   padding: 40px 20px 48px;
+}
+
+.support h1 {
+  margin: 12px 0 0;
+  font-size: 36px;
+  line-height: 1.12;
+  text-wrap: balance;
+}
+
+.support .lead {
+  margin: 16px 0 0;
+  font-family: var(--serif);
+  font-size: 20px;
+  line-height: 1.45;
+}
+
+/* Season one's six cases in a row, and a dashed room for the next. */
+.six {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0 6px;
+  margin: 26px 0 0;
+}
+
+.six img {
+  width: 44px;
+  height: 55px;
+  border-radius: 6px;
+  box-shadow: 0 4px 10px rgb(58 43 37 / 0.18);
+}
+
+.six span {
+  width: 44px;
+  height: 55px;
+  box-sizing: border-box;
+  border: 1.5px dashed var(--wine);
+  border-radius: 6px;
+}
+
+.six figcaption {
+  flex-basis: 100%;
+  margin-top: 10px;
+  font-size: 13px;
+  text-align: center;
+  color: var(--ink-dim);
+}
+
+.give {
+  margin-top: 24px;
+  padding: 20px;
+  border-radius: 14px;
+  background: var(--vellum);
+  box-shadow: var(--ring);
+  text-align: center;
+}
+
+.give p {
+  margin: 12px 0 0;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--ink-dim);
+}
+
+/* Who makes it and what giving does: the first line 32 px under what's above, the rest 12 apart. */
+.story {
+  margin-top: 20px;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.story p {
+  margin: 12px 0 0;
+}
+
+.story .dim {
+  font-size: 15px;
+}
+
+.others h2 {
+  margin: 40px 0 0;
+  font-size: 24px;
+  line-height: 1.2;
+}
+
+.others p {
+  margin: 6px 0 0;
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+.others h2 + p {
+  margin-top: 10px;
+}
+
+.about {
+  padding: 40px 20px 56px;
   font-size: 16px;
   line-height: 1.6;
 }
@@ -657,6 +854,24 @@ main,
 .about .dim {
   margin-top: 12px;
   font-size: 15px;
+}
+
+/* The dedication under Say hello, set as the home page's epigraph is, under a short wine rule. */
+.about .dedication {
+  margin-top: 48px;
+  font-family: var(--serif);
+  font-size: 22px;
+  font-style: italic;
+  line-height: 1.5;
+}
+
+.dedication::before {
+  content: '';
+  display: block;
+  width: 40px;
+  height: 2px;
+  margin-bottom: 20px;
+  background: var(--wine);
 }
 
 /* The foot of every page, on the ink. */
@@ -742,6 +957,10 @@ main,
     color: var(--linen);
     font-size: 15px;
     text-decoration: none;
+  }
+
+  .kicker {
+    font-size: 13px;
   }
 
   /* The home page's nav: How it plays, at the top's right. */
@@ -1139,6 +1358,166 @@ main,
     margin-top: 28px;
   }
 
+  .plays {
+    max-width: none;
+    padding: 0;
+  }
+
+  .plays .intro {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 80px var(--gutter) 0;
+  }
+
+  .plays h1 {
+    margin-top: 14px;
+    font-size: 68px;
+    line-height: 1.08;
+  }
+
+  .plays .lead {
+    margin-top: 24px;
+    font-size: 24px;
+  }
+
+  .plays .intro .dim {
+    max-width: none;
+    font-size: 18px;
+  }
+
+  /* The three steps side by side. */
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 48px;
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 80px var(--gutter) 0;
+  }
+
+  .screen {
+    --round: 40px;
+    width: 276px;
+    max-width: 100%;
+    box-shadow:
+      0 34px 56px -20px rgb(43 36 24 / 0.45),
+      0 2px 6px rgb(43 36 24 / 0.18);
+  }
+
+  .steps .kicker {
+    margin-top: 32px;
+  }
+
+  .steps .dim {
+    max-width: 300px;
+  }
+
+  .hint {
+    max-width: 640px;
+    margin: 88px auto 0;
+    padding: 26px 32px;
+  }
+
+  .hint .ask {
+    font-size: 24px;
+  }
+
+  .hint .dim {
+    font-size: 16px;
+  }
+
+  .plays .call {
+    padding: 96px var(--gutter);
+  }
+
+  .support {
+    max-width: 820px;
+    padding: 80px var(--gutter) 96px;
+    text-align: center;
+  }
+
+  .support h1 {
+    margin-top: 14px;
+    font-size: 60px;
+    line-height: 1.08;
+  }
+
+  .support .lead {
+    max-width: 640px;
+    margin: 22px auto 0;
+    font-size: 24px;
+  }
+
+  .six {
+    gap: 0 12px;
+    margin-top: 48px;
+  }
+
+  .six img {
+    width: 84px;
+    height: 105px;
+    border-radius: 9px;
+    box-shadow: 0 8px 18px rgb(58 43 37 / 0.2);
+  }
+
+  .six span {
+    width: 84px;
+    height: 105px;
+    border-width: 2px;
+    border-radius: 9px;
+  }
+
+  .six figcaption {
+    margin-top: 14px;
+    font-size: 14px;
+  }
+
+  /* On a computer the button stands alone under the row, its own width. */
+  .give {
+    margin-top: 36px;
+    padding: 0;
+    background: none;
+    box-shadow: none;
+  }
+
+  .give .button {
+    display: inline-flex;
+    min-height: 56px;
+    padding: 0 48px;
+    font-size: 18px;
+  }
+
+  .give p {
+    font-size: 14px;
+  }
+
+  .story {
+    max-width: 600px;
+    margin: 56px auto 0;
+    padding-top: 20px;
+    border-top: 1px solid var(--edge);
+    font-size: 17px;
+    line-height: 1.65;
+  }
+
+  .story .dim {
+    font-size: 16px;
+    line-height: 1.6;
+  }
+
+  .others h2 {
+    margin-top: 64px;
+    font-size: 30px;
+  }
+
+  .others p {
+    font-size: 17px;
+  }
+
+  .others h2 + p {
+    margin-top: 12px;
+  }
+
   .about {
     max-width: 680px;
     padding: 80px var(--gutter) 104px;
@@ -1184,6 +1563,11 @@ main,
   .about .dim {
     margin-top: 14px;
     font-size: 17px;
+  }
+
+  .about .dedication {
+    margin-top: 64px;
+    font-size: 26px;
   }
 
   /* One line of links beside the name, and Google's line under both. */
