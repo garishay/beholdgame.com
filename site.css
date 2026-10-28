@@ -582,9 +582,9 @@ main,
 /* The season as you scroll (70e), once its script starts: the ribbon lies in the fold until the
    reading line passes its tail, then falls with the line to the thread; the thread draws down
    behind the line, its tip fading; and each book, case, and season two arrives as the line reaches
-   it, and Help make it with season two. The script sets the line's reach: --fall from the Bible's
-   top, --drawn from the thread's. Only an arrival fades in, so what the line has passed as the page
-   opens shows at once. */
+   it, and Help make it with season two, or sooner while it has the keyboard's focus. The script
+   sets the line's reach: --fall from the Bible's top, --drawn from the thread's. Only an arrival
+   fades in, so what the line has passed as the page opens shows at once. */
 .falls .bible::after {
   height: clamp(80.65%, calc(var(--fall, 0px) - 9.65%), calc(90.35% + var(--below)));
 }
@@ -606,7 +606,8 @@ main,
 }
 
 .falls .timeline > .here,
-.falls .help.here {
+.falls .help.here,
+.falls .help:focus-within {
   opacity: 1;
   transform: none;
   transition:
