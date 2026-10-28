@@ -391,107 +391,59 @@ main,
   line-height: 1.6;
 }
 
-/* The open Bible over the timeline, drawn: the cover, the pages' edges, two pages with their books
-   and their lines of text, and the ribbon. Its sizes are variables, so a computer's is one rule. */
+/* The open Bible over the timeline: its picture, with the two books' names and the ribbon laid over
+   it where the picture's record places them (docs/bible.md): the names' centres 32.4% and 67.5%
+   across and 11.4% down, and the ribbon down the fold from 9.65%, past the picture's foot to meet
+   the thread. Its sizes are variables, so a computer's is one rule; a narrower column shrinks it. */
 .bible {
-  --wide: 300px;
-  --tall: 178px;
+  --wide: 329px;
   --gap-above: 34px;
-  --cover: 6px -8px -4px;
-  --cover-round: 14px;
-  --cover-shadow: 0 16px 30px rgb(58 43 37 / 0.3);
-  --edges: 4px -3px 3px;
-  --edges-round: 11px;
-  --page: 150px;
-  --page-tall: 171px;
-  --page-round: 8px;
-  --spine-round: 11px;
-  --label-top: 11px;
-  --label-size: 9px;
-  --label-space: 0.22em;
-  --line: 1.5px;
-  --line-gap: 7px;
-  --column: 53.5px 126px;
-  --columns-top: 30px;
-  --left-a: 16px;
-  --left-b: 78.5px;
-  --right-a: 18px;
-  --right-b: 80.5px;
-  --ribbon: 14px auto auto -4px;
+  --shadow: 0 14px 15px rgb(58 43 37 / 0.3);
+  --name-size: 9px;
+  --name-space: 0.22em;
   --ribbon-size: 8px;
-  --ribbon-long: 214px;
-  --ribbon-tip: 94%;
-  --lines: repeating-linear-gradient(
-    180deg,
-    rgb(43 36 24 / 0.22) 0 var(--line),
-    transparent var(--line) var(--line-gap)
-  );
+  --notch: 13px;
+  --below: 50px;
   position: relative;
-  z-index: 0;
-  width: var(--wide);
-  height: var(--tall);
+  width: min(var(--wide), 100%);
   margin: var(--gap-above) auto 0;
 }
 
-.bible::before,
-.bible::after {
-  content: '';
-  position: absolute;
-  z-index: -1;
-}
-
-.bible::before {
-  z-index: -2;
-  inset: var(--cover);
-  border-radius: var(--cover-round);
-  background: #3a2b25;
-  box-shadow: var(--cover-shadow);
-}
-
-.bible::after {
-  inset: var(--edges);
-  border-radius: var(--edges-round);
-  background: repeating-linear-gradient(180deg, #d9cbab 0 1px, #f6efdd 1px 3px);
+.bible img {
+  display: block;
+  width: 100%;
+  height: auto;
+  filter: drop-shadow(var(--shadow));
 }
 
 .bible p {
   position: absolute;
-  top: 0;
-  left: 0;
-  width: var(--page);
-  height: var(--page-tall);
+  top: 11.4%;
+  left: 32.4%;
   margin: 0;
-  padding-top: var(--label-top);
-  box-sizing: border-box;
-  border-radius: var(--page-round) 2px 2px var(--spine-round);
-  background:
-    var(--lines) var(--left-a) var(--columns-top) / var(--column) no-repeat,
-    var(--lines) var(--left-b) var(--columns-top) / var(--column) no-repeat,
-    linear-gradient(90deg, #fdfaf2 0%, #f6efdf 70%, #d6c7a6 100%);
-  font-size: var(--label-size);
-  letter-spacing: var(--label-space);
+  padding-left: var(--name-space);
+  transform: translate(-50%, -50%);
+  white-space: nowrap;
+  font-size: var(--name-size);
+  letter-spacing: var(--name-space);
   text-transform: uppercase;
   color: var(--wine);
 }
 
 .bible p + p {
-  left: auto;
-  right: 0;
-  border-radius: 2px var(--page-round) var(--spine-round) 2px;
-  background:
-    var(--lines) var(--right-a) var(--columns-top) / var(--column) no-repeat,
-    var(--lines) var(--right-b) var(--columns-top) / var(--column) no-repeat,
-    linear-gradient(270deg, #fdfaf2 0%, #f6efdf 70%, #d6c7a6 100%);
+  left: 67.5%;
 }
 
-.bible p + p::before {
+.bible::after {
   content: '';
   position: absolute;
-  inset: var(--ribbon);
+  top: 9.65%;
+  left: 50%;
   width: var(--ribbon-size);
-  height: var(--ribbon-long);
+  height: calc(90.35% + var(--below));
+  margin-left: calc(var(--ribbon-size) / -2);
   background: linear-gradient(90deg, #5e2430 0%, #9a4252 50%, #5e2430 100%);
-  clip-path: polygon(0 0, 100% 0, 100% 100%, 50% var(--ribbon-tip), 0 100%);
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 50% calc(100% - var(--notch)), 0 100%);
 }
 
 /* The timeline: a wine thread through the season, a pill for each book, the cases on it, and
@@ -625,6 +577,41 @@ main,
   margin: 2px 0 0;
   font-size: 15px;
   line-height: 1.5;
+}
+
+/* The season as you scroll (70e), once its script starts: the ribbon lies in the fold until the
+   reading line passes its tail, then falls with the line to the thread; the thread draws down
+   behind the line, its tip fading; and each book, case, and season two arrives as the line reaches
+   it, and Help make it with season two. The script sets the line's reach: --fall from the Bible's
+   top, --drawn from the thread's. Only an arrival fades in, so what the line has passed as the page
+   opens shows at once. */
+.falls .bible::after {
+  height: clamp(80.65%, calc(var(--fall, 0px) - 9.65%), calc(90.35% + var(--below)));
+}
+
+.falls .timeline::before {
+  --tip: linear-gradient(
+    180deg,
+    #000 calc(var(--drawn, 0px) - 80px),
+    transparent var(--drawn, 0px)
+  );
+  -webkit-mask-image: var(--tip);
+  mask-image: var(--tip);
+}
+
+.falls .timeline > li,
+.falls .help {
+  opacity: 0;
+  transform: translateY(8px);
+}
+
+.falls .timeline > .here,
+.falls .help.here {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity 0.4s ease-out,
+    transform 0.4s ease-out;
 }
 
 .home-screen {
@@ -1242,33 +1229,14 @@ main,
   }
 
   .bible {
-    --wide: 560px;
-    --tall: 330px;
+    --wide: 612px;
     --gap-above: 56px;
-    --cover: 10px -14px -6px;
-    --cover-round: 20px;
-    --cover-shadow: 0 26px 50px rgb(58 43 37 / 0.32);
-    --edges: 6px -5px 4px;
-    --edges-round: 16px;
-    --page: 280px;
-    --page-tall: 318px;
-    --page-round: 12px;
-    --spine-round: 16px;
-    --label-top: 20px;
-    --label-size: 11px;
-    --label-space: 0.24em;
-    --line: 2px;
-    --line-gap: 10px;
-    --column: 101px 238px;
-    --columns-top: 47px;
-    --left-a: 30px;
-    --left-b: 147px;
-    --right-a: 32px;
-    --right-b: 149px;
-    --ribbon: 26px auto auto -6px;
+    --shadow: 0 24px 25px rgb(58 43 37 / 0.32);
+    --name-size: 11px;
+    --name-space: 0.24em;
     --ribbon-size: 12px;
-    --ribbon-long: 372px;
-    --ribbon-tip: 95%;
+    --notch: 19px;
+    --below: 68px;
   }
 
   .timeline {
