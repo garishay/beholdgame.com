@@ -85,8 +85,8 @@ main,
   color: var(--wine);
 }
 
-/* The play buttons (A5, A6): a group for each device, the computer's until a script names the
-   device (70d). On a phone the first button fills the column, and the rest sit under it. */
+/* The play buttons (A5, A6): a group for each device, the computer's until the head's script names
+   the device. On a phone the first button fills the column, and the rest sit under it. */
 .play {
   display: flex;
   flex-direction: column;
@@ -95,6 +95,16 @@ main,
 
 .play.android,
 .play.iphone {
+  display: none;
+}
+
+[data-device='android'] .play.android,
+[data-device='iphone'] .play.iphone {
+  display: flex;
+}
+
+[data-device='android'] .play.computer,
+[data-device='iphone'] .play.computer {
   display: none;
 }
 
@@ -171,6 +181,109 @@ main,
     rgb(244 238 226 / 0.86) 52%,
     var(--linen) 92%
   );
+}
+
+/* The Look (70d), which its script lays on the picture over the fade. A tap anywhere on the picture
+   answers, so the pointer is all the picture's, as the game's is, and no tap is highlighted. */
+.look {
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* A spot is placed by its center, its top left on the design's picture 390 px wide plus 22, scaled
+   with the picture, and stays a 44 px fingertip: a margin's percentage is of the width, down as
+   well as across. Unfound, it shows nothing until the keyboard focuses it. */
+.spot {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  width: 44px;
+  height: 44px;
+  margin: calc((var(--y) + 22) * 100% / 390 - 22px) 0 0 calc((var(--x) + 22) * 100% / 390 - 22px);
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: none;
+  cursor: inherit;
+}
+
+/* A found spot keeps a light ring; a miss's ring is the same without its fill. */
+.spot.found,
+.miss {
+  border: 2px solid var(--vellum);
+  box-shadow: 0 0 0 2px rgb(43 36 24 / 0.45);
+}
+
+.spot.found {
+  background: rgb(251 247 239 / 0.22);
+}
+
+/* A tap that finds nothing rings where it landed, widening as it fades within half a second, and
+   takes no tap of its own (the amendment, issuecomment-6470291769). The script takes it away. */
+.miss {
+  position: absolute;
+  z-index: 1;
+  width: 44px;
+  height: 44px;
+  margin: -22px 0 0 -22px;
+  box-sizing: border-box;
+  border-radius: 50%;
+  pointer-events: none;
+  animation: widen 0.45s ease-out forwards;
+}
+
+@keyframes widen {
+  from {
+    transform: scale(0.5);
+  }
+
+  to {
+    transform: scale(1.5);
+    opacity: 0;
+  }
+}
+
+/* With reduced motion, it fades where it is. */
+@media (prefers-reduced-motion: reduce) {
+  .miss {
+    animation-name: fade;
+  }
+}
+
+@keyframes fade {
+  to {
+    opacity: 0;
+  }
+}
+
+/* The line at the picture's foot: the caption, then the word found and the count. */
+.finds {
+  position: absolute;
+  inset: auto 20px 4px;
+  z-index: 1;
+  text-align: left;
+  cursor: auto;
+}
+
+.finds p {
+  margin: 0;
+  font-family: var(--serif);
+  font-size: 17px;
+  line-height: 1.45;
+}
+
+.finds div {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 6px;
+  font-size: 14px;
+  color: var(--ink-dim);
+}
+
+.finds span:first-child {
+  color: var(--wine);
 }
 
 .hero .words {
@@ -1031,6 +1144,14 @@ main,
       rgb(244 238 226 / 0.86) 55%,
       var(--linen) 100%
     );
+  }
+
+  .finds {
+    inset: auto 4px 6px;
+  }
+
+  .finds p {
+    font-size: 19px;
   }
 
   .hero h1 {

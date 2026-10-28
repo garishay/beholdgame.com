@@ -11,9 +11,19 @@
 <meta property="og:description" content="Look closer. There&#39;s more to every story.">
 <meta property="og:image" content="https://beholdgame.com/og-image.jpg">
 <meta name="twitter:card" content="summary_large_image">
+<script>(function device() {
+  const agent = navigator.userAgent
+  const iPad = /Macintosh/.test(agent) && navigator.maxTouchPoints > 1
+  const iphone = /iPhone|iPod|iPad/.test(agent) || iPad
+  document.documentElement.dataset.device = /Android/.test(agent)
+    ? 'android'
+    : iphone
+      ? 'iphone'
+      : 'computer'
+})()</script>
 <link rel="icon" href="../icons/favicon-48.png?v=3595e1d1">
 <link rel="apple-touch-icon" href="../icons/apple-touch-icon-180.png?v=2587e3fe">
-<link rel="stylesheet" href="../site.css?v=5c5f9df9">
+<link rel="stylesheet" href="../site.css?v=51f7d490">
 </head>
 <body>
 <header class="top">
