@@ -373,7 +373,11 @@ main,
   color: var(--wine);
 }
 
+/* The season: one ribbon, the Bible's, runs down it at its own width and colours (70g). */
 .season {
+  --ribbon-size: 8px;
+  --notch: 13px;
+  --ribbon: linear-gradient(90deg, #5e2430 0%, #9a4252 50%, #5e2430 100%);
   padding: 48px 20px 40px;
   background: var(--papyrus);
   text-align: center;
@@ -393,17 +397,16 @@ main,
 
 /* The open Bible over the timeline: its picture, with the two books' names and the ribbon laid over
    it where the picture's record places them (docs/bible.md): the names' centres 32.4% and 67.5%
-   across and 11.4% down, and the ribbon down the fold from 9.65%, past the picture's foot to meet
-   the thread. Its sizes are variables, so a computer's is one rule; a narrower column shrinks it. */
+   across and 11.4% down, and the ribbon down the fold from 9.65%, past the picture's foot to the
+   timeline, which runs it on. Its sizes are variables, so a computer's is one rule; a narrower
+   column shrinks it. */
 .bible {
   --wide: 329px;
   --gap-above: 34px;
   --shadow: 0 14px 15px rgb(58 43 37 / 0.3);
   --name-size: 9px;
   --name-space: 0.22em;
-  --ribbon-size: 8px;
-  --notch: 13px;
-  --below: 50px;
+  --below: 90px;
   position: relative;
   width: min(var(--wide), 100%);
   margin: var(--gap-above) auto 0;
@@ -442,28 +445,27 @@ main,
   width: var(--ribbon-size);
   height: calc(90.35% + var(--below));
   margin-left: calc(var(--ribbon-size) / -2);
-  background: linear-gradient(90deg, #5e2430 0%, #9a4252 50%, #5e2430 100%);
-  clip-path: polygon(0 0, 100% 0, 100% 100%, 50% calc(100% - var(--notch)), 0 100%);
+  background: var(--ribbon);
 }
 
-/* The timeline: a wine thread through the season, a pill for each book, the cases on it, and
-   season two at its end. */
+/* The timeline: the ribbon on from the Bible's run, behind a pill for each book and each case, to
+   its swallowtail 6 px above season two's ring. */
 .timeline {
   position: relative;
-  margin: 26px 0 0;
-  padding: 0 0 8px;
+  margin: 66px 0 0;
+  padding: 0;
   list-style: none;
 }
 
 .timeline::before {
   content: '';
   position: absolute;
-  top: 24px;
-  bottom: 50px;
+  top: 0;
+  bottom: 0;
   left: 50%;
-  width: 2px;
-  margin-left: -1px;
-  background: linear-gradient(180deg, var(--wine) 0%, var(--wine) 92%, rgb(122 46 59 / 0) 100%);
+  width: var(--ribbon-size);
+  margin-left: calc(var(--ribbon-size) / -2);
+  background: var(--ribbon);
 }
 
 .book {
@@ -475,6 +477,10 @@ main,
 
 .book:first-child {
   margin-top: 44px;
+}
+
+.case + .book {
+  margin-top: 32px;
 }
 
 .book span {
@@ -496,65 +502,61 @@ main,
   color: var(--ink-dim);
 }
 
+/* A case is its picture, on the ribbon, and its title under it on the band's own colour, so the
+   ribbon stops behind the words as it does behind the books' names. */
 .case {
   position: relative;
-  display: grid;
-  grid-template:
-    'picture title' auto
-    'picture sub' auto
-    'picture .' 1fr
-    'brief brief' auto / 84px 1fr;
-  column-gap: 12px;
-  margin-top: 22px;
-  padding: 14px;
-  border-radius: 14px;
-  background: var(--vellum);
-  box-shadow:
-    0 0 0 1px rgb(43 36 24 / 0.1),
-    0 8px 20px rgb(58 43 37 / 0.08);
-  text-align: left;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 30px;
 }
 
 .book + .case {
   margin-top: 18px;
 }
 
+/* The picture's shadow ends 8 px under it, before the title, so the title's papyrus meets the
+   plain band. */
 .case img {
-  grid-area: picture;
-  width: 84px;
-  height: 105px;
-  border-radius: 8px;
-  object-fit: cover;
+  width: 240px;
+  max-width: 100%;
+  height: auto;
+  border-radius: 12px;
+  box-shadow:
+    0 0 0 1px rgb(43 36 24 / 0.08),
+    0 2px 6px rgb(58 43 37 / 0.2);
 }
 
 .case h3 {
-  grid-area: title;
-  margin: 2px 0 0;
-  font-size: 19px;
+  margin: 12px 0 0;
+  padding: 4px 12px;
+  background: var(--papyrus);
+  font-size: 21px;
   line-height: 1.25;
 }
 
-.case .sub {
-  grid-area: sub;
-  margin: 2px 0 0;
-  font-size: 13px;
-  color: var(--wine);
-}
-
-.case .brief {
-  grid-area: brief;
-  margin: 10px 0 0;
-  font-size: 14px;
-  line-height: 1.5;
-  color: var(--ink-dim);
-}
-
+/* Season two: its papyrus ends the ribbon 6 px above its ring, and cuts the swallowtail there. */
 .next {
   position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
   margin-top: 34px;
+  padding: 6px 0 8px;
+  background: var(--papyrus);
+}
+
+.next::before {
+  content: '';
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  width: var(--ribbon-size);
+  height: var(--notch);
+  margin-left: calc(var(--ribbon-size) / -2);
+  background: var(--papyrus);
+  clip-path: polygon(50% 0, 100% 100%, 0 100%);
 }
 
 .next span {
@@ -579,30 +581,26 @@ main,
   line-height: 1.5;
 }
 
-/* The season as you scroll (70e), once its script starts: the ribbon lies in the fold until the
-   reading line passes its tail, then falls with the line to the thread; the thread draws down
-   behind the line, its tip fading; and each book, case, and season two arrives as the line reaches
-   it, and Help make it with season two, or sooner while it has the keyboard's focus. The script
-   sets the line's reach: --fall from the Bible's top, --drawn from the thread's. Only an arrival
-   fades in, so what the line has passed as the page opens shows at once. */
+/* The season as you scroll (70e, 70g), once its script starts. The ribbon is the Bible's alone: it
+   lies in the fold until the reading line passes its tail, then unrolls with the line, both ways,
+   its swallowtail at the line, until it rests 6 px above season two's ring. Each book, case, and
+   season two shows while the line is past its top, and Help make it with season two, or while it
+   has the keyboard's focus. The script sets the line's reach from the Bible's top, --fall, and the
+   ribbon's length at rest from the fold, --rest. A stop rises and falls only once the season rolls,
+   so what the line has passed as the page opens shows at once, and the rest hides at once. */
 .falls .bible::after {
-  height: clamp(80.65%, calc(var(--fall, 0px) - 9.65%), calc(90.35% + var(--below)));
+  height: clamp(80.65%, calc(var(--fall) - 9.65%), var(--rest));
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 50% calc(100% - var(--notch)), 0 100%);
 }
 
 .falls .timeline::before {
-  --tip: linear-gradient(
-    180deg,
-    #000 calc(var(--drawn, 0px) - 80px),
-    transparent var(--drawn, 0px)
-  );
-  -webkit-mask-image: var(--tip);
-  mask-image: var(--tip);
+  content: none;
 }
 
 .falls .timeline > li,
 .falls .help {
   opacity: 0;
-  transform: translateY(8px);
+  transform: translateY(20px);
 }
 
 .falls .timeline > .here,
@@ -610,9 +608,13 @@ main,
 .falls .help:focus-within {
   opacity: 1;
   transform: none;
+}
+
+.rolls .timeline > li,
+.rolls .help {
   transition:
-    opacity 0.4s ease-out,
-    transform 0.4s ease-out;
+    opacity 0.5s ease-out,
+    transform 0.5s ease-out;
 }
 
 .home-screen {
@@ -1215,6 +1217,8 @@ main,
   }
 
   .season {
+    --ribbon-size: 12px;
+    --notch: 19px;
     padding: 80px var(--gutter) 72px;
   }
 
@@ -1240,20 +1244,24 @@ main,
     --shadow: 0 24px 25px rgb(58 43 37 / 0.32);
     --name-size: 11px;
     --name-space: 0.24em;
-    --ribbon-size: 12px;
-    --notch: 19px;
-    --below: 68px;
+    --below: 120px;
   }
 
+  /* Each book's cases in one row under it, 56 px apart, shrinking with the column: the valley
+     alone in the middle of its row. A row's margins don't collapse, so the first book's 48 px
+     comes under this 44, to sit 92 px under the picture, as the design sets it. */
   .timeline {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    column-gap: 56px;
     max-width: 1120px;
-    margin: 40px auto 0;
+    margin: 44px auto 0;
   }
 
-  .timeline::before {
-    top: 26px;
-    bottom: 60px;
-    background: linear-gradient(180deg, var(--wine) 0%, var(--wine) 90%, rgb(122 46 59 / 0) 100%);
+  .book,
+  .next {
+    flex: 0 0 100%;
   }
 
   .timeline .book {
@@ -1270,74 +1278,41 @@ main,
     font-size: 11px;
   }
 
-  /* The cases alternate on either side of the thread, each picture toward it, with a dot. */
-  .case {
-    grid-template:
-      'picture title' auto
-      'picture sub' auto
-      'picture brief' 1fr / 140px 1fr;
-    column-gap: 22px;
-    width: calc(50% - 48px);
-    margin: 36px 0 0 auto;
-    padding: 0;
-    background: none;
-    box-shadow: none;
-  }
-
-  .case:nth-child(odd of .case) {
-    grid-template:
-      'title picture' auto
-      'sub picture' auto
-      'brief picture' 1fr / 1fr 140px;
-    margin-left: 0;
-    text-align: right;
-  }
-
+  /* Each case takes a third of the row less its two 56 px gaps, up to 300 px, so a book's three
+     shrink with the column together; a row breaks by its cases' widths before any of them shrinks,
+     so 300 px each would put the third on a row of its own below 1100 px (#203's review). */
+  .case,
   .book + .case {
+    flex: 0 1 calc((100% - 112px) / 3);
+    max-width: 300px;
+    min-width: 0;
     margin-top: 30px;
   }
 
   .case img {
-    width: 140px;
-    height: 175px;
-    border-radius: 10px;
-    box-shadow: 0 10px 24px rgb(58 43 37 / 0.2);
+    width: 100%;
+    box-shadow:
+      0 0 0 1px rgb(43 36 24 / 0.08),
+      0 3px 8px rgb(58 43 37 / 0.2);
   }
 
   .case h3 {
-    margin-top: 4px;
+    margin-top: 14px;
+    padding: 4px 14px;
     font-size: 24px;
   }
 
-  .case .sub {
-    margin-top: 4px;
-    font-size: 14px;
+  /* A row's cases arrive left to right, a tenth of a second apart. */
+  .case + .case.here {
+    transition-delay: 0.1s;
   }
 
-  .case .brief {
-    font-size: 15px;
-    line-height: 1.6;
-  }
-
-  .case::after {
-    content: '';
-    position: absolute;
-    top: 80px;
-    left: -55px;
-    width: 14px;
-    height: 14px;
-    border-radius: 50%;
-    background: var(--wine);
-    box-shadow: 0 0 0 5px var(--papyrus);
-  }
-
-  .case:nth-child(odd of .case)::after {
-    left: auto;
-    right: -55px;
+  .case + .case + .case.here {
+    transition-delay: 0.2s;
   }
 
   .next {
-    margin-top: 56px;
+    margin-top: 50px;
   }
 
   .next span {
@@ -1582,7 +1557,10 @@ main,
     font-size: 18px;
   }
 
+  /* The lines under the button take the story's measure (70g). */
   .give p {
+    max-width: 600px;
+    margin: 12px auto 0;
     font-size: 14px;
   }
 

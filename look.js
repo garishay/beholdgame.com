@@ -1,5 +1,7 @@
-((words) => {
-  const { spots, prompt, found, count, named, done, slip } = words
+((
+  words,
+) => {
+  const { spots, prompt, found, count, named, done, slip, sounds } = words
   const art = document.querySelector('.hero .art')
   if (!(art instanceof HTMLElement)) return
   const [line, caption, row, find, tally] = ['div', 'p', 'div', 'span', 'span'].map((tag) =>
@@ -22,6 +24,30 @@
   })
   art.classList.add('look')
   art.append(...buttons, line)
+  // A sound that fails to load is an empty file, which decodes to nothing and plays nothing.
+  const fetched = Object.fromEntries(
+    Object.entries(sounds).map(([name, address]) => [
+      name,
+      fetch(address)
+        .then((response) => response.arrayBuffer())
+        .catch(() => new ArrayBuffer(0)),
+    ]),
+  )
+  // The context, made once, and the two sounds, decoded as it is made.
+  let wake = () => {
+    const session = Reflect.get(navigator, 'audioSession')
+    if (session) session.type = 'ambient'
+    const context = new AudioContext()
+    const decoded = Object.fromEntries(
+      Object.entries(fetched).map(([name, bytes]) => [
+        name,
+        bytes.then((data) => context.decodeAudioData(data)),
+      ]),
+    )
+    const made = { context, decoded }
+    wake = () => made
+    return made
+  }
   art.addEventListener('click', ({ target, clientX, clientY }) => {
     if (target instanceof Node && line.contains(target)) return
     // The spot tapped, a keyboard's press included, or the nearest whose edge is within the slip.
@@ -44,11 +70,28 @@
       return
     }
     const { label, caption: said, word } = spots[i]
+    const first = !buttons[i].classList.contains('found')
     buttons[i].classList.add('found')
     buttons[i].setAttribute('aria-label', named.replace('{label}', label))
     const n = buttons.filter((button) => button.classList.contains('found')).length
     caption.textContent = said
     find.textContent = n < spots.length ? found.replace('{word}', word) : done
     tally.textContent = n < spots.length ? count.replace('{n}', `${n}`) : ''
+    if (!first) return
+    try {
+      const { context, decoded } = wake()
+      if (context.state !== 'running') void context.resume()
+      void decoded[n < spots.length ? 'found' : 'close'].then(
+        (buffer) => {
+          const source = context.createBufferSource()
+          source.buffer = buffer
+          source.connect(context.destination)
+          source.start()
+        },
+        () => {},
+      )
+    } catch {
+      // No audio here: the line says what each find is.
+    }
   })
-})({"spots":[{"label":"The smoke on the far hill","caption":"Smoke rises from an altar on a far hill.","word":"altar","at":[47,83]},{"label":"The vines along the wall","caption":"Vines heavy with grapes grow along the top of the town wall.","word":"vineyard","at":[309,150]},{"label":"The boy at the brook","caption":"A boy kneels at the brook, choosing smooth stones.","word":"stones","at":[95,317]},{"label":"The chariot on the road","caption":"A chariot climbs the road toward the town gate.","word":"chariot","at":[267,245]}],"found":"Found: {word}","count":"{n} of 4 found","named":"{label}, found","done":"All four found. That’s how Behold is played.","prompt":"Tap anything that looks like it matters.","slip":16})
+})({"spots":[{"label":"The smoke on the far hill","caption":"Smoke rises from an altar on a far hill.","word":"altar","at":[47,83]},{"label":"The vines along the wall","caption":"Vines heavy with grapes grow along the top of the town wall.","word":"vineyard","at":[309,150]},{"label":"The boy at the brook","caption":"A boy kneels at the brook, choosing smooth stones.","word":"stones","at":[95,317]},{"label":"The chariot on the road","caption":"A chariot climbs the road toward the town gate.","word":"chariot","at":[267,245]}],"found":"Found: {word}","count":"{n} of 4 found","named":"{label}, found","done":"All four found. That’s how Behold is played.","prompt":"Tap anything that looks like it matters.","slip":16,"sounds":{"found":"audio/found.m4a?v=03bc880d","close":"audio/close.m4a?v=a1b1b74f"}})
