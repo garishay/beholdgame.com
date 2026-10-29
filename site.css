@@ -883,9 +883,36 @@ main,
   color: var(--ink-dim);
 }
 
-/* Who makes it and what giving does: the first line 32 px under what's above, the rest 12 apart. */
+/* The ways to give (#191): the monthly gift's button, the same size as the one-time link's and
+   outlined in wine, 10 px under it, each the card's width. */
+.ways {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.give .monthly {
+  box-sizing: border-box;
+  border: 1.5px solid var(--wine);
+  background: none;
+  color: var(--wine);
+}
+
+/* The link to Stripe's portal, last, at the lines' size, its tap target 44 px tall. */
+.give .stop {
+  margin-top: 2px;
+}
+
+.give .stop a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+}
+
+/* Who makes it and what giving does: the first line 32 px under what's above, the rest 12 apart.
+   The 20 px is padding, so the first line's 12 adds to it, where a margin took it in (#191). */
 .story {
-  margin-top: 20px;
+  padding-top: 20px;
   font-size: 16px;
   line-height: 1.6;
 }
@@ -1542,7 +1569,8 @@ main,
     font-size: 14px;
   }
 
-  /* On a computer the button stands alone under the row, its own width. */
+  /* On a computer the buttons stand under the row, each its own width, side by side 12 px apart,
+     and wrap where the column is narrow (#191). */
   .give {
     margin-top: 36px;
     padding: 0;
@@ -1550,8 +1578,13 @@ main,
     box-shadow: none;
   }
 
+  .ways {
+    flex-flow: row wrap;
+    justify-content: center;
+    gap: 12px;
+  }
+
   .give .button {
-    display: inline-flex;
     min-height: 56px;
     padding: 0 48px;
     font-size: 18px;
