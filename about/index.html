@@ -21,6 +21,40 @@
       ? 'iphone'
       : 'computer'
 })()</script>
+<script>((page, service) => {
+  if (
+    ('globalPrivacyControl' in navigator && navigator.globalPrivacyControl === true) ||
+    navigator.doNotTrack === '1'
+  )
+    return
+  const device = document.documentElement.dataset.device
+  let from = ''
+  try {
+    from = new URL(document.referrer).hostname.toLowerCase().replace(/^www\./, '')
+  } catch {
+    // No site told: an address typed, a bookmark, or a link from a site that keeps its name back.
+  }
+  if (!/^[a-z\d.-]{0,40}$/.test(from)) from = 'other'
+  let shown = document.hidden ? -1 : performance.now()
+  let counted = false
+  document.addEventListener('visibilitychange', () => {
+    if (!document.hidden && shown < 0) shown = performance.now()
+    if (!document.hidden || counted || shown < 0) return
+    counted = true
+    // Under 10 or 30 seconds, or 1, 2, or 5 minutes, or longer.
+    const under = [10e3, 30e3, 60e3, 120e3, 300e3].findIndex((ms) => performance.now() - shown < ms)
+    const stay = ['<10s', '<30s', '<1m', '<2m', '<5m'][under] ?? '5m+'
+    navigator.sendBeacon(
+      `${service}/count`,
+      JSON.stringify([
+        ['view', page, device, 1],
+        ['from', page, from, 1],
+        ['stay', page, stay, 1],
+        ['where', page, '', 1],
+      ]),
+    )
+  })
+})("about", "https://behold-counts.garishay.workers.dev")</script>
 <link rel="icon" href="../icons/favicon-48.png?v=3595e1d1">
 <link rel="apple-touch-icon" href="../icons/apple-touch-icon-180.png?v=2587e3fe">
 <link rel="stylesheet" href="../site.css?v=f3413c42">
