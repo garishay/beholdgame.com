@@ -389,6 +389,16 @@ main,
   line-height: 1.15;
 }
 
+/* The season's era under its name, the game's own line (#87), set as the game's header sets it,
+   small and dim, a pixel larger under the site's larger name: one line on a 360-wide phone (#241,
+   Gate 58 A1). */
+.season .era {
+  margin: 6px 0 0;
+  font-size: 14px;
+  line-height: 1.4;
+  color: var(--ink-dim);
+}
+
 .season .intro {
   margin: 10px 0 0;
   font-size: 16px;
