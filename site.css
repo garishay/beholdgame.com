@@ -139,6 +139,13 @@ main,
   height: 60px;
 }
 
+/* Under the browser's button, in a computer's group in one column, as a window under 900 px wide
+   or a page without script shows it, the badge keeps the quarter of its height clear that
+   Google's rules ask, as "or play in your browser" keeps 16 px under it on Android (#204). */
+.button + .badge {
+  margin-top: 16px;
+}
+
 .play .or {
   margin: 16px 0 0;
   font-size: 15px;
@@ -1141,6 +1148,10 @@ main,
 
   .badge img {
     height: 52px;
+  }
+
+  .button + .badge {
+    margin-top: 0;
   }
 
   .hero {
